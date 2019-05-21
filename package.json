@@ -1,0 +1,29 @@
+{
+  "name": "breakout-phaser",
+  "version": "1.0.0",
+  "description": "Breakout Clone using Phaser 3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "start webpack --watch && start live-server --port=8085"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikahimself/breakout-phaser.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mikahimself/breakout-phaser/issues"
+  },
+  "homepage": "https://github.com/mikahimself/breakout-phaser#readme",
+  "devDependencies": {
+    "live-server": "^1.2.1",
+    "phaser": "^3.17.0",
+    "ts-loader": "^6.0.1",
+    "typescript": "^3.4.5",
+    "webpack": "^4.32.0",
+    "webpack-cli": "^3.3.2"
+  }
+}
