@@ -43,7 +43,6 @@ export class MainScene extends Phaser.Scene {
         this.ball.setCollideWorldBounds(true);
         //this.ball.body.velocity.x = -220;
         //this.ball.body.velocity.y = -220;
-        
         this.ball.setBounce(1);
         this.physics.world.setBounds(40, 20, 720, 640);
         this.physics.world.setBoundsCollision(true, true, true, false);
@@ -66,6 +65,7 @@ export class MainScene extends Phaser.Scene {
 
     update() {
         if (this.ball.y > 620) {
+            this.cameras.main.shake(200, 0.01);
             this.resetBall();
         }
 
@@ -121,7 +121,22 @@ export class MainScene extends Phaser.Scene {
     }
 
     hitBat(ball: Phaser.Physics.Arcade.Image, bat: Phaser.Physics.Arcade.Image) {
-        // TODO: Change x speed based on where in the bat the ball hits.
+        var xdiff = ball.x - bat.x;
+        console.log("Difference: " + xdiff);
+        //ball.body.velocity.x = Phaser.Math.Clamp(xdiff * 10, -350, 350);
+        
+        if (xdiff < 0) {
+            var angle = -90 + (xdiff * 1.35);
+            var speed = this.physics.velocityFromAngle(angle, 300);
+            ball.setVelocity(speed.x, speed.y);
+        }
+        else if (xdiff >= 0) {
+            var angle = -90 + (xdiff * 1.35);
+            var speed = this.physics.velocityFromAngle(angle, 300);
+            ball.setVelocity(speed.x, speed.y);
+        }
+
+        
     }
 
     resetBall(): void {
@@ -136,7 +151,7 @@ export class MainScene extends Phaser.Scene {
             if (this.ballOnBat) {
                 var speed = this.physics.velocityFromAngle(Math.floor(Math.random() * (61)) -120, 300);
                 //var speed = this.physics.velocityFromAngle(-60, 250);
-                console.log('Speed: ' + speed);
+                //console.log('Speed: ' + speed);
                 this.ball.setVelocity(speed.x, speed.y);
                 this.ballOnBat = false;
             }
