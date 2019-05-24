@@ -2,6 +2,73 @@ import 'phaser';
 
 export class LevelData {
 
+    level0 = [
+        'wyyyyyyyyyyyyyyyyyyz',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x        44        v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v'
+    ];
+
+    level00 = [
+        'wyyyyyyyyyyyyyyyyyyz',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x        22        v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v',
+        'x                  v'
+    ];
+
+
     level1 = [
         'wyyyyyyyyyyyyyyyyyyz',
         'x                  v',
@@ -138,7 +205,7 @@ export class LevelData {
     levels = [
         this.level1,
         this.level2,
-        this.level3
-    ]
-
+        this.level3,
+        this.level4
+    ];
 }
