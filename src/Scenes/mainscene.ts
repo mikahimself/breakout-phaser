@@ -21,8 +21,10 @@ export class MainScene extends Phaser.Scene {
     gameOverText: Phaser.GameObjects.Text;
     gameCompleteText: Phaser.GameObjects.Text;
     againButton: Phaser.Physics.Arcade.Sprite;
+    mainmenuButton: Phaser.Physics.Arcade.Sprite;
     levelData: LevelData;
     brickCount: number = 0;
+    ballSpeed: number = 330;
 
     constructor() {
         super({
@@ -36,13 +38,13 @@ export class MainScene extends Phaser.Scene {
 
     preload() {
         // Load every sprite during preload.
-        this.load.image('brick', '../../assets/brick.png');
-        this.load.image('wall', '../../assets/wall.png');
-        this.load.image('wall_c', '../../assets/wall_corner.png');
-        this.load.image('wall_t', '../../assets/wall_top.png');
-        this.load.image('ball', '../../assets/ball.png');
-        this.load.image('bat', '../../assets/bat.png');
-        this.load.spritesheet('tryagain', '../../assets/tryagain.png', {frameWidth: 200, frameHeight: 50});
+        // this.load.image('brick', '../../assets/brick.png');
+        // this.load.image('wall', '../../assets/wall.png');
+        // this.load.image('wall_c', '../../assets/wall_corner.png');
+        // this.load.image('wall_t', '../../assets/wall_top.png');
+        // this.load.image('ball', '../../assets/ball.png');
+        // this.load.image('bat', '../../assets/bat.png');
+        // this.load.spritesheet('tryagain', '../../assets/tryagain.png', {frameWidth: 200, frameHeight: 50});
     }
 
     create() {
@@ -67,6 +69,8 @@ export class MainScene extends Phaser.Scene {
         this.createLaunchEvent();
         this.againButton = this.physics.add.sprite(400, 400, 'tryagain').setInteractive();
         this.againButton.disableBody(true, true);
+        this.mainmenuButton = this.physics.add.sprite(400, 450, 'mainmenu').setInteractive();
+        this.mainmenuButton.disableBody(true, true);
         this.createButtonEvents();
         this.physics.add.collider(this.ball, this.walls);
         this.physics.add.collider(this.ball, this.bat, this.hitBat, null, this);
@@ -76,7 +80,6 @@ export class MainScene extends Phaser.Scene {
     update() {
         this.checkForGameOver();
         this.checkForLevelComplete();
-        console.log(this.currentLevelNo);
     }
 
     createWalls(): void {
@@ -144,7 +147,7 @@ export class MainScene extends Phaser.Scene {
     hitBat(ball: Phaser.Physics.Arcade.Image, bat: Phaser.Physics.Arcade.Image) {
         var xdiff = ball.x - bat.x;
         var angle = -90 + (xdiff * 1.35);
-        var speed = this.physics.velocityFromAngle(angle, 300);
+        var speed = this.physics.velocityFromAngle(angle, this.ballSpeed);
         ball.setVelocity(speed.x, speed.y);
     }
 
@@ -194,8 +197,6 @@ export class MainScene extends Phaser.Scene {
         else {
             this.onGameComplete();
         }
-        
-        
     }
 
     onGameComplete(): void {
@@ -211,7 +212,8 @@ export class MainScene extends Phaser.Scene {
         this.gameOverText.visible = true;
         this.againButton.enableBody(false, 400, 400, true, true);
         this.againButton.setFrame(0);
-        
+        this.mainmenuButton.enableBody(false, 400, 450, true, true);
+        this.mainmenuButton.setFrame(0);
     }
 
     onResetGame(): void {
@@ -232,13 +234,12 @@ export class MainScene extends Phaser.Scene {
         this.resetBall();
         this.gameOver = false;
         this.gameFinished = false;
-        
     }
 
     createLaunchEvent(): void {
         this.input.on('pointerup', function(pointer: Phaser.Input.Pointer) {
             if (this.ballOnBat && !this.gameOver) {
-                var speed = this.physics.velocityFromAngle(Math.floor(Math.random() * (61)) -120, 300);
+                var speed = this.physics.velocityFromAngle(Math.floor(Math.random() * (61)) -120, this.ballSpeed);
                 this.ball.setVelocity(speed.x, speed.y);
                 this.ballOnBat = false;
             }
@@ -247,7 +248,7 @@ export class MainScene extends Phaser.Scene {
 
     createMoveEvent(): void {
         this.input.on('pointermove', function (pointer: Phaser.Input.Pointer) {
-            this.bat.x = Phaser.Math.Clamp(pointer.x, 70, 730);
+            this.bat.x = Phaser.Math.Clamp(pointer.x, 80, 720);
         }, this);
     }
 
@@ -264,5 +265,20 @@ export class MainScene extends Phaser.Scene {
             this.againButton.setFrame(2);
             this.onResetGame();
         }, this);
+
+        this.mainmenuButton.on('pointerout', function (pointer: Phaser.Input.Pointer) {
+            this.mainmenuButton.setFrame(0);
+        }, this);
+
+        this.mainmenuButton.on('pointerover', function (pointer: Phaser.Input.Pointer) {
+            this.mainmenuButton.setFrame(1);
+        }, this);
+        
+        this.mainmenuButton.on('pointerup', function (pointer: Phaser.Input.Pointer) { 
+            this.mainmenuButton.setFrame(2);
+            this.scene.start('MenuScene');
+        }, this);
+
+
     }
 }
